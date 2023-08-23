@@ -37,4 +37,75 @@ const populateOptions = (optionsArray) => {
             optionsArray.push(color)
         }
     }
+    return optionsArray;
 };
+
+//Create quiz Object
+const populateQuiz = () => {
+    for (let i = 0; i < 5; i++) {
+        let currentColor = colorGenrator();
+        let allColors = [];
+        allColors.push(currentColor);
+        allColors = populateOptions(allColors);
+        quizArray.push({
+            id: i,
+            correct: currentColor,
+            options: allColors,
+        });
+    }
+};
+
+//Quiz Creation
+function quizContainer() {
+    //randomly sort questions
+    quizArray.sort(() => Math.random() - 0.5);
+
+    //Generate Quiz
+    for (let i of quizArray){
+        //Randomly sort options
+        i.options.sort(() => Math.random() - 0.5);
+
+    //Quiz card creation
+    let div = document.createElement("div");
+    div.classList.add("container-mid", "hide");
+
+    //Question number
+    numOfQuestions.innerHTML = 1 + "of" + quizArray.length + "Question";
+
+    //questions
+    let questionDiv = document.createElement ("p");
+    questionDiv.classList.add("question");
+    questionDiv.innerHTML = `<div class="question-color>${i.correct}</div>"`;
+    div.appendChild(questionDiv);
+
+    //Options
+    div.innerHTML += `
+    <div class="button-container">
+    <button class="option-div" onclick="checker(this)" style="background-color: ${i.options[0]} data-option="${i.options[0]}"></button>
+    <button class="option-div" onclick="checker(this)" style="background-color: ${i.options[1]} data-option="${i.options[1]}"></button>
+    <button class="option-div" onclick="checker(this)" style="background-color: ${i.options[2]} data-option="${i.options[2]}"></button>
+    <button class="option-div" onclick="checker(this)" style="background-color: ${i.options[3]} data-option="${i.options[3]}"></button>
+    </div>
+    `;
+    quizContainer.appendChild(div);
+    }
+}
+
+function initial(){
+    nextButton.classList.add("hide");
+    quizContainer.innerHTML = "";
+    questionCount = 0;
+    scoreCount = 0;
+    clearInterval(countdown);
+    count = 10;
+    quizCreator();
+}
+
+//when user clicks on start button
+startButton.addEventListener("click", () => {
+    startScreen.classList.add("hide");
+    displayContainer.classList.remove("hide");
+    quizArray = [];
+    populateQuiz();
+    initial();
+});
