@@ -16,3 +16,25 @@ let countdown;
 let letters = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F"];
 //Questions and options Array
 let quizArray = [];
+
+const generateRandomValue = (array) => array[Math.floor (Math.random() * array.length)];
+
+//Generate Hex Codes
+
+const colorGenrator = () => {
+    newColor = '#';
+    for (let i = 0; i < 6; i++) {newColor += generateRandomValue(letters)
+    }
+return newColor;
+};
+
+//Create Options
+const populateOptions = (optionsArray) => {
+    let expectedLength = 4;
+    while (optionsArray.length < expectedLength) {
+        let color = colorGenrator();
+        if (!optionsArray.includes(color)){
+            optionsArray.push(color)
+        }
+    }
+};
