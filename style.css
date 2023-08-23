@@ -68,7 +68,10 @@ button{
     padding: 0.4em 2em;
     border-radius: 0.3em;
 }
-
 .hide {
     display: none;
+}
+#restart {
+    margin-top: 6em;
+    
 }
